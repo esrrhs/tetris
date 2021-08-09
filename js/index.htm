@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
+    <link rel="icon" href="https://geek.oa.com/tetris/favicon.ico">
+    <title>腾讯极客挑战赛</title>
+    <link href="./tetris.css" rel="stylesheet">
+  </head><body>
+    <div id="app" style="width: 370.2px; height: 617px; font-size: 1.5vh;"><div class="page-intro"><div class="slogan"><p><span>第四期</span></p> <p><span>腾讯·极客挑战赛</span></p> <h1>鹅罗斯方块
+            <span>腾讯员工赛道</span></h1></div> <div class="entry"><a href="https://geek.oa.com/tetris/#/game" class=""><div class="btn">开始</div></a> <div><a href="https://cloud.tencent.com/developer/competition/introduction/10015/result">全国赛道入口 &gt;</a></div></div> <div class="sub"><div><a href="https://mk.woa.com/contest/40/rule" target="_blank"><i class="iconfont icon-web"></i> <p>活动介绍页</p></a></div> <div><i class="iconfont icon-guide"></i> <p>赛事说明</p></div> <div><i class="iconfont icon-share_img_circle"></i> <p>生成分享图</p></div></div> <div class="logo"><img src="./logo.png"></div> <div class="dialog tip-dialog"><div class="dialog-cont"><div class="title"><h3>赛事说明</h3> <div class="close">×</div></div> <div class="rule-intro"><p>腾讯极客挑战赛旨在为技术爱好者提供一个相互切磋、展示自我的舞台，并将“代码无所不能”的概念充分融入比赛中，每季度赛题形式均不同，比如解谜题、游戏闯关等，涵盖研发、安全、算法等各领域。</p> <p>本期赛题“鹅罗斯方块”秉承了赛事一贯传统，“几乎无需写代码”，只需轻松玩几把俄罗斯方块，最后谁得分最高，谁就是冠军！</p> <p class="tip"> · 腾讯员工请务必前往内部赛道-码客平台参赛（若仍选择外部赛道，则不参与排名及评奖） </p> <div class="op"><div><i class="iconfont icon-left"></i> <span>左移</span> <span>（方向键 ←）</span></div> <div><i class="iconfont icon-right"></i> <span>右移</span> <span>（方向键 →）</span></div> <div><i class="iconfont icon-rotate"></i> <span>旋转</span> <span>（方向键 ↑）</span></div> <div><i class="iconfont icon-down"></i> <span>下落一格</span> <span>（方向键 ↓）</span></div> <div><i class="iconfont icon-drop1"></i> <span>直接下落</span> <span>（空格键）</span></div></div> <div class="op extra"><div><span>暂停：Enter 键</span></div> <div><span>重玩：Esc 键</span></div></div> <p>游戏中，每下落100块，方块的下落速度增加一次。</p> <p>当方块被消除时，玩家得分。所获得的分数与玩家一次性消除的行数，以及屏幕中已有的格子数有关。“富贵险中求”，在游戏中堆的方块越满，消除得分越高。</p> <table><thead><tr><th>一次性消除的行数</th><th>得到分数</th></tr></thead> <tbody><tr><td>1行</td><td>已有格子数 × 1</td></tr> <tr><td>2行</td><td>已有格子数 × 3</td></tr> <tr><td>3行</td><td>已有格子数 × 6</td></tr> <tr><td>4行</td><td>已有格子数 × 10</td></tr></tbody></table> <div>例如：</div> <p>现在屏幕中原有120个格子。下一个方块出现，此时屏幕上有124个格子。玩家控制这个方块一次性消除了两行，那么玩家这次得分就是：124 × 3 = 372 分。 </p></div></div></div> <div class="dialog share-dialog" style="display: none;"><div class="dialog-cont"><canvas></canvas> <canvas></canvas> <img src="。/share.png" class="bg-img"> <img src="" class="res-img"> <div class="title"><p>右键保存图片</p> <div class="close">×</div></div></div></div></div></div>
+    <div id="outdated"></div>
+    <script type="text/x-template" id="template-intro">
+      <div class="page-intro">
+        <div class="slogan">
+          <p><span>第四期</span></p>
+          <p><span>腾讯·极客挑战赛</span></p>
+          <h1>鹅罗斯方块
+            <span>{{ pageInfo.channel }}</span>
+          </h1>
+        </div>
+        <div class="entry">
+          <router-link v-if="pageInfo.isInternal" to="/game">
+            <div class="btn">开始</div>
+          </router-link>
+          <a v-else :href="pageInfo.externalEntryUrl">
+            <div class="btn">开始</div>
+          </a>
+          <div v-if="pageInfo.isInternal"><a :href="pageInfo.externalEntryUrl">{{ pageInfo.externalChannelName }}入口 ></a></div>
+          <div v-else><a :href="pageInfo.internalEntryUrl">{{ pageInfo.internalChannelName }}入口 ></a></div>
+        </div>
+        <div class="sub">
+          <div>
+            <a :href="pageInfo.ruleUrl" target="_blank">
+              <i class="iconfont icon-web"></i>
+              <p>活动介绍页</p>
+            </a>
+          </div>
+          <div @click="tipVisible = true">
+            <i class="iconfont icon-guide"></i>
+            <p>赛事说明</p>
+          </div>
+          <div @click="popShare">
+            <i class="iconfont icon-share_img_circle"></i>
+            <p>生成分享图</p>
+          </div>
+        </div>
+        <div class="logo">
+          <img src="img/logo.png">
+        </div>
+        <div v-show="tipVisible" class="dialog tip-dialog">
+          <div class="dialog-cont">
+            <div class="title">
+              <h3>赛事说明</h3>
+              <div class="close" @click="closeTip">×</div>
+            </div>
+            <div class="rule-intro">
+              <p>腾讯极客挑战赛旨在为技术爱好者提供一个相互切磋、展示自我的舞台，并将“代码无所不能”的概念充分融入比赛中，每季度赛题形式均不同，比如解谜题、游戏闯关等，涵盖研发、安全、算法等各领域。</p>
+              <p>本期赛题“鹅罗斯方块”秉承了赛事一贯传统，“几乎无需写代码”，只需轻松玩几把俄罗斯方块，最后谁得分最高，谁就是冠军！</p>
+              <p class="tip"> · 腾讯员工请务必前往内部赛道-码客平台参赛（若仍选择外部赛道，则不参与排名及评奖） </p>
+              <div class="op">
+                <div>
+                  <i class="iconfont icon-left"></i>
+                  <span>左移</span>
+                  <span>（方向键 ←）</span>
+                </div>
+                <div>
+                  <i class="iconfont icon-right"></i>
+                  <span>右移</span>
+                  <span>（方向键 →）</span>
+                </div>
+                <div>
+                  <i class="iconfont icon-rotate"></i>
+                  <span>旋转</span>
+                  <span>（方向键 ↑）</span>
+                </div>
+                <div>
+                  <i class="iconfont icon-down"></i>
+                  <span>下落一格</span>
+                  <span>（方向键 ↓）</span>
+                </div>
+                <div>
+                  <i class="iconfont icon-drop1"></i>
+                  <span>直接下落</span>
+                  <span>（空格键）</span>
+                </div>
+              </div>
+              <div class="op extra">
+                <div><span>暂停：Enter 键</span></div>
+                <div><span>重玩：Esc 键</span></div>
+              </div>
+              <p>游戏中，每下落100块，方块的下落速度增加一次。</p>
+              <p>当方块被消除时，玩家得分。所获得的分数与玩家一次性消除的行数，以及屏幕中已有的格子数有关。“富贵险中求”，在游戏中堆的方块越满，消除得分越高。</p>
+              <table>
+                <thead>
+                  <tr><th>一次性消除的行数</th><th>得到分数</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>1行</td><td>已有格子数 × 1</td></tr>
+                  <tr><td>2行</td><td>已有格子数 × 3</td></tr>
+                  <tr><td>3行</td><td>已有格子数 × 6</td></tr>
+                  <tr><td>4行</td><td>已有格子数 × 10</td></tr>
+                  <!-- <tr><td colspan="2">其他情况不得分</td></tr> -->
+                </tbody>
+              </table>
+              <div>例如：</div>
+              <p>现在屏幕中原有120个格子。下一个方块出现，此时屏幕上有124个格子。玩家控制这个方块一次性消除了两行，那么玩家这次得分就是：124 × 3 = 372 分。 </p>
+            </div>
+            <!-- <router-link to="/game">
+              <div class="btn">直接开始游戏 ></div>
+            </router-link> -->
+          </div>
+        </div>
+        <share ref="share"></share>
+      </div>
+    </script>
+    <script type="text/x-template" id="template-game">
+      <div class="page-game" :class="{'shake': shake}">
+        <div class="top">
+          <div class="terminal">
+            <code>< SYSTEM BOOTING ></code>
+            <!-- <code>GEK VER 4.01 SYS START</code> -->
+            <code>// 鹅罗斯方块 - {{ pageInfo.channel }}</code>
+          </div>
+          <replay-panel :game="game" :record="result.opRecord"></replay-panel>
+          <div class="share" @click="popShare">
+            <i class="iconfont icon-share_img"></i>
+          </div>
+        </div>
+        <div class="cont">
+          <canvas ref="canvas"></canvas>
+          <div class="info">
+            <router-link v-if="gameState.status === 'stopped'" to="/intro">
+              <div class="primary-btn">
+                <i class="iconfont icon-home"></i>
+              </div>
+            </router-link>
+            <div v-else class="primary-btn" @click="toggleGameStatus">
+              <i class="iconfont" :class="gameState.status === 'paused' ? 'icon-play' : 'icon-pause'"></i>
+            </div>
+            <div class="block">
+              <p>得分</p>
+              <p>{{ gameState.score }}</p>
+            </div>
+            <div class="block">
+              <p>速度</p>
+              <p>{{ gameState.speed }}</p>
+            </div>
+            <div class="block">
+              <p>下一个</p>
+            </div>
+          </div>
+          <div class="border"></div>
+          <div v-show="['', 'paused'].indexOf(gameState.status) > -1" class="mask">
+            <h1>暂停</h1>
+            <div>
+              <div class="btn" @click="toggleGameStatus">继续游戏</div>
+              <div class="btn" @click="start">重新开始</div>
+              <router-link to="/intro"><div class="btn">返回主页</div></router-link>
+              <div class="btn" @click="popShare">分享游戏</div>
+            </div>
+          </div>
+          <div v-show="gameState.status === 'stopped'" class="mask res">
+            <h1>游戏结束</h1>
+            <div>
+              <p>得分</p>
+              <h3>{{ gameState.score }}</h3>
+              <p>{{ text.res }}</p>
+            </div>
+            <div>
+              <div v-if="gameState.mode === 'play'" class="btn" @click="upload">{{ uploading ? '处理中...' : '上传成绩' }}</div>
+              <div class="btn" @click="start">再玩一局</div>
+              <div v-if="gameState.mode === 'play'" class="btn" @click="popShare(gameState.score)">分享游戏</div>
+            </div>
+          </div>
+        </div>
+        <div v-if="isMobile" class="bottom">
+          <i class="iconfont icon-left" @touchstart="keydownHandler(37)" @touchend="keyupHandler"></i>
+          <i class="iconfont icon-right" @touchstart="keydownHandler(39)" @touchend="keyupHandler"></i>
+          <i class="iconfont icon-rotate" @touchstart="keydownHandler(38)" @touchend="keyupHandler"></i>
+          <i class="iconfont icon-down" @touchstart="keydownHandler(40)" @touchend="keyupHandler"></i>
+          <i class="iconfont icon-drop1" @touchstart="keydownHandler(32)" @touchend="keyupHandler"></i>
+        </div>
+        <div v-else class="bottom">
+          <i class="iconfont icon-left" @mousedown="keydownHandler(37)" @mouseup="keyupHandler"></i>
+          <i class="iconfont icon-right" @mousedown="keydownHandler(39)" @mouseup="keyupHandler"></i>
+          <i class="iconfont icon-rotate" @mousedown="keydownHandler(38)" @mouseup="keyupHandler"></i>
+          <i class="iconfont icon-down" @mousedown="keydownHandler(40)" @mouseup="keyupHandler"></i>
+          <i class="iconfont icon-drop1" @mousedown="keydownHandler(32)" @mouseup="keyupHandler"></i>
+        </div>
+        <div v-show="gameState.status === 'stopped' && gameResVisible" class="dialog res-dialog">
+          <div class="dialog-cont">
+            <div class="top-tag">RECORD</div>
+            <div class="title">
+              <h3></h3>
+              <div class="close" @click="gameResVisible = false">×</div>
+            </div>
+            <div class="res">
+              <h1>本次得分</h1>
+              <h3>{{ gameState.score }}</h3>
+              <p>{{ text.res }}</p>
+            </div>
+            <div v-if="gameState.mode === 'play'">
+              <div class="btn" @click="upload">{{ uploading ? '处理中...' : '上传成绩' }}</div>
+              <div class="btn" @click="popShare(gameState.score)">分享游戏</div>
+            </div>
+          </div>
+        </div>
+        <div v-show="gameState.status === 'stopped' && uploadResVisible" class="dialog res-dialog">
+          <div class="dialog-cont">
+            <div class="top-tag">RECORD</div>
+            <div class="title">
+              <h3></h3>
+              <div class="close" @click="uploadResVisible = false">×</div>
+            </div>
+            <div v-if="uploadErrorMsg" class="res">
+              <h1></h1>
+              <h3><i class="iconfont icon-exclamation"></i></h3>
+              <p>成绩上传失败！</p>
+              <p>{{ uploadErrorMsg }}</p>
+            </div>
+            <div v-else class="res">
+              <h1></h1>
+              <h3><i class="iconfont icon-check"></i></h3>
+              <p>成绩上传成功！</p>
+              <div class="upload-limit">
+                <div class="tag">{{ leftUploadTimes }}</div>
+                <div class="text">今日剩余上传次数</div>
+              </div>
+            </div>
+            <div>
+              <div class="btn" @click="popShare(gameState.score)">分享游戏</div>
+            </div>
+          </div>
+        </div>
+        <share ref="share"></share>
+      </div>
+		</script>
+		<script type="text/javascript" src="./vendor.js"></script>
+    <script>
+      // outdatedBrowserRework({
+      //   fullscreen: false,
+      //   language: 'zh',
+      //   browserSupport: {
+      //     'IE': 10,
+      //   },
+      //   messages: {
+      //     zh: {
+      //         outOfDate: "",
+      //         unsupported: "浏览器版本过低",
+      //         update: {
+      //             web: "请使用更高版本的浏览器进行访问",
+      //             googlePlay: "",
+      //             appStore: ""
+      //         },
+      //         url: "http://browser-update.org/",
+      //         callToAction: "",
+      //         close: "关闭"
+      //     }
+      //   }
+      // })
+    </script>
+		<script type="text/javascript" src="./beacon_web.js"></script>
+
+    <!-- 俄罗斯方块配置文件，包含：画布大小、方块形状、操作动作等配置 -->
+		<script type="text/javascript" src="./tetris.config.js"></script>
+
+    <!-- 俄罗斯方块核心计算文件，包含：获取方块、移动方块、旋转方块、边界检测等功能 -->
+		<script type="text/javascript" src="./tetris.core.js"></script>
+
+    <!-- 俄罗斯方块游戏主文件，包含：游戏的启动暂停、游戏时钟单步 runner 的逻辑控制（playStep 和 replayStep）、游戏回放（playRecord）、画布渲染 -->
+		<script type="text/javascript" src="./tetris.game.js"></script>
+
+    <!-- 生成分享图片的功能 -->
+		<script type="text/javascript" src="./share.js"></script>
+		<script type="text/javascript" src="./extra"></script>
+
+    <!-- 介绍页面界面功能 -->
+		<script type="text/javascript" src="./page-intro.js"></script>
+
+    <!-- 游戏页面界面功能 -->
+		<script type="text/javascript" src="./page-game.js"></script>
+
+    <!-- 入口文件 -->
+		<script type="text/javascript" src="./main.js"></script>
+
+    <!-- 浏览器控制台快速调试方法（可直接复制到控制台中运行） -->
+    <!-- 1、回放操作序列：game.pause();game.playRecord('N,D19,N,D17,N,D16,N,D14,N,D11,N,D9,N,D6,N,D4,N,D3,N,D1'.split(',')); -->
+    <!-- 2、提交上传成绩（会消耗提交次数）：axios.post(`api/upload`, { record: 'N,D19,N,D17,N,D16,N,D14,N,D11,N,D9,N,D6,N,D4,N,D3,N,D1', score: 0 }).then(({ data }) => { console.log('提交结果', data); if(data.info) {console.log(data.info)} }); -->
+  
+
+</body></html>
