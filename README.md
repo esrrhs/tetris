@@ -1,4 +1,9 @@
 # Tetris
+
+[<img src="https://img.shields.io/github/license/esrrhs/tetris">](https://github.com/esrrhs/tetris)
+[<img src="https://img.shields.io/github/languages/top/esrrhs/tetris">](https://github.com/esrrhs/tetris)
+[<img src="https://img.shields.io/github/workflow/status/esrrhs/tetris/Go">](https://github.com/esrrhs/tetris/actions)
+
 tetris是参加[【极客技术挑战赛第四期】鹅罗斯方块](https://geek.qq.com/tetris/#/) 的项目，这个项目是给定一个俄罗斯方块的固定序列，看看谁能消除的分数最高。
 
 ![image](./logo.png)
