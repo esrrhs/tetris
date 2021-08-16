@@ -3,7 +3,7 @@ tetris是参加[【极客技术挑战赛第四期】鹅罗斯方块](https://gee
 
 ![image](./logo.png)
 
-本项目最终得分881136，操作的序列参考[result.txt](./result.txt)文件。
+本项目最终得分881136，操作的序列参考[result.txt](./result.txt)文件。内部赛道名次17名。
 
 解题的步骤主要分为了上手、实现、优化。
 
