@@ -2,8 +2,8 @@ package main
 
 import (
 	"flag"
-	"github.com/esrrhs/go-engine/src/common"
-	"github.com/esrrhs/go-engine/src/loggo"
+	"github.com/esrrhs/tetris/internal/common"
+	"github.com/esrrhs/tetris/internal/loggo"
 	"os"
 	"runtime/pprof"
 )

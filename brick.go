@@ -62,15 +62,16 @@ func (brick *Brick) Draw() string {
 /*
 game.tetris.curRandomNum = 12358;
 game.tetris.curRandomNum = game.tetris.getRandomNum(game.tetris.curRandomNum);
-for (i = 0; i < 10; i++) {
-  const {
-    shapeIndex,
-    stateIndex
-  } = game.tetris.getShapeInfo(game.tetris.curRandomNum, i);
-  console.log("index " + i + " shapeIndex " + shapeIndex + " stateIndex " + stateIndex);
-  console.log(game.tetris.shapes[shapeIndex][stateIndex])
-  game.tetris.curRandomNum = game.tetris.getRandomNum(game.tetris.curRandomNum);
-}
+
+	for (i = 0; i < 10; i++) {
+	  const {
+	    shapeIndex,
+	    stateIndex
+	  } = game.tetris.getShapeInfo(game.tetris.curRandomNum, i);
+	  console.log("index " + i + " shapeIndex " + shapeIndex + " stateIndex " + stateIndex);
+	  console.log(game.tetris.shapes[shapeIndex][stateIndex])
+	  game.tetris.curRandomNum = game.tetris.getRandomNum(game.tetris.curRandomNum);
+	}
 */
 func GetBrickInfo() (int, int) {
 	randomNum := gRandom.Rand()

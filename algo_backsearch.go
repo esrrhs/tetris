@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/esrrhs/go-engine/src/loggo"
+	"github.com/esrrhs/tetris/internal/loggo"
 	"strconv"
 	"strings"
 	"time"
